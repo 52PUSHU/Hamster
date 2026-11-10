@@ -53,7 +53,6 @@
 		C03EC39A2B06491E00DB741E /* HamsterKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C03E803C296D53650083E53A /* HamsterKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C03EC3A62B06670F00DB741E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C03EC3A82B06670F00DB741E /* InfoPlist.strings */; };
 		C03EC3BD2B066C1100DB741E /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03EC3BC2B066C1100DB741E /* KeyboardViewController.swift */; };
-		C03EC3C12B066C1100DB741E /* SbxlmKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C03EC3BA2B066C1100DB741E /* SbxlmKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C03EC3CC2B066D4100DB741E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C03EC3CE2B066D4100DB741E /* InfoPlist.strings */; };
 		C03EC3D32B066DDC00DB741E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C02435932A0490220080CFB4 /* Assets.xcassets */; };
 		C053ADC32A5D503200EA7EEE /* HamsteriOS in Frameworks */ = {isa = PBXBuildFile; productRef = C053ADC22A5D503200EA7EEE /* HamsteriOS */; };
@@ -73,13 +72,6 @@
 			remoteGlobalIDString = C03E803B296D53650083E53A;
 			remoteInfo = HamsterKeyboard;
 		};
-		C03EC3BF2B066C1100DB741E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C03E801D296D4F4C0083E53A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C03EC3B92B066C1100DB741E;
-			remoteInfo = SbxlmKeyboard;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,7 +81,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				C03EC3C12B066C1100DB741E /* SbxlmKeyboard.appex in Embed Foundation Extensions */,
 				C03EC39A2B06491E00DB741E /* HamsterKeyboard.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -111,7 +102,6 @@
 
 /* Begin PBXFileReference section */
 		C000CA9D296EA72600EC5323 /* HamsterKeyboardInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamsterKeyboardInputViewController.swift; sourceTree = "<group>"; };
-		C00749622ABAD48C00C5CD0A /* HamsterFileServer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = HamsterFileServer; path = Packages/HamsterFileServer; sourceTree = "<group>"; };
 		C00C26BB2B069D6900E92F89 /* boost_filesystem.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = boost_filesystem.xcframework; sourceTree = "<group>"; };
 		C00C26BC2B069D6900E92F89 /* boost_regex.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = boost_regex.xcframework; sourceTree = "<group>"; };
 		C00C26BD2B069D6900E92F89 /* boost_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = boost_system.xcframework; sourceTree = "<group>"; };
@@ -310,7 +300,6 @@
 			children = (
 				C03E8025296D4F4C0083E53A /* Hamster.app */,
 				C03E803C296D53650083E53A /* HamsterKeyboard.appex */,
-				C03EC3BA2B066C1100DB741E /* SbxlmKeyboard.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,7 +343,6 @@
 				C08387F42A5589AF00EA8082 /* HamsterKit */,
 				C08387F12A55897700EA8082 /* RimeKit */,
 				C0C8B57E2A823BBF009972C1 /* HamsterKeyboardKit */,
-				C00749622ABAD48C00C5CD0A /* HamsterFileServer */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -404,7 +392,6 @@
 			);
 			dependencies = (
 				C03EC39C2B06491E00DB741E /* PBXTargetDependency */,
-				C03EC3C02B066C1100DB741E /* PBXTargetDependency */,
 			);
 			name = Hamster;
 			packageProductDependencies = (
@@ -471,9 +458,6 @@
 						CreatedOnToolsVersion = 14.2;
 						LastSwiftMigration = 1420;
 					};
-					C03EC3B92B066C1100DB741E = {
-						CreatedOnToolsVersion = 15.0.1;
-					};
 				};
 			};
 			buildConfigurationList = C03E8020296D4F4C0083E53A /* Build configuration list for PBXProject "Hamster" */;
@@ -497,7 +481,6 @@
 			targets = (
 				C03E8024296D4F4C0083E53A /* Hamster */,
 				C03E803B296D53650083E53A /* HamsterKeyboard */,
-				C03EC3B92B066C1100DB741E /* SbxlmKeyboard */,
 			);
 		};
 /* End PBXProject section */
@@ -571,11 +554,6 @@
 			isa = PBXTargetDependency;
 			target = C03E803B296D53650083E53A /* HamsterKeyboard */;
 			targetProxy = C03EC39B2B06491E00DB741E /* PBXContainerItemProxy */;
-		};
-		C03EC3C02B066C1100DB741E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C03EC3B92B066C1100DB741E /* SbxlmKeyboard */;
-			targetProxy = C03EC3BF2B066C1100DB741E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -758,7 +736,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hamster/Assets/Preview Content\"";
-				DEVELOPMENT_TEAM = M4N6995A28;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -780,7 +757,7 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.fuxiao.app.Hamster;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chen.hamster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -802,7 +779,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hamster/Assets/Preview Content\"";
-				DEVELOPMENT_TEAM = M4N6995A28;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -824,7 +800,7 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.fuxiao.app.Hamster;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chen.hamster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -843,7 +819,6 @@
 				CODE_SIGN_ENTITLEMENTS = HamsterKeyboard/HamsterKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M4N6995A28;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HamsterKeyboard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HamsterKeyboard;
@@ -857,7 +832,7 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.fuxiao.app.Hamster.HamsterKeyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chen.hamster.keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -875,7 +850,6 @@
 				CODE_SIGN_ENTITLEMENTS = HamsterKeyboard/HamsterKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M4N6995A28;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HamsterKeyboard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HamsterKeyboard;
@@ -889,7 +863,7 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.fuxiao.app.Hamster.HamsterKeyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chen.hamster.keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -905,7 +879,6 @@
 				CODE_SIGN_ENTITLEMENTS = SbxlmKeyboard/SbxlmKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M4N6995A28;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SbxlmKeyboard/Info.plist;
@@ -920,7 +893,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.fuxiao.app.Hamster.SbxlmKeyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chen.hamster.sbxlm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -937,7 +910,6 @@
 				CODE_SIGN_ENTITLEMENTS = SbxlmKeyboard/SbxlmKeyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M4N6995A28;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SbxlmKeyboard/Info.plist;
@@ -952,7 +924,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 3.0.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.fuxiao.app.Hamster.SbxlmKeyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chen.hamster.sbxlm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";

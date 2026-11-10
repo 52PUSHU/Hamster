@@ -34,16 +34,6 @@ public class SettingsViewModel: ObservableObject {
     }
   }
 
-  public var enableAppleCloud: Bool {
-    get {
-      HamsterAppDependencyContainer.shared.configuration.general?.enableAppleCloud ?? false
-    }
-    set {
-      HamsterAppDependencyContainer.shared.configuration.general?.enableAppleCloud = newValue
-      HamsterAppDependencyContainer.shared.applicationConfiguration.general?.enableAppleCloud = newValue
-    }
-  }
-
   var tableReloadSubject = PassthroughSubject<Bool, Never>()
   var tableReloadPublished: AnyPublisher<Bool, Never> {
     tableReloadSubject.eraseToAnyPublisher()
@@ -113,14 +103,6 @@ public class SettingsViewModel: ObservableObject {
           }
         ),
         .init(
-          icon: UIImage(systemName: "wifi")!,
-          text: "Wi-Fi上传方案",
-          accessoryType: .disclosureIndicator,
-          navigationAction: { [unowned self] in
-            self.mainViewModel.subViewSubject.send(.uploadInputSchema)
-          }
-        ),
-        .init(
           icon: UIImage(systemName: "folder")!,
           text: "文件管理",
           accessoryType: .disclosureIndicator,
@@ -156,16 +138,7 @@ public class SettingsViewModel: ObservableObject {
           }
         ),
       ]),
-      SettingSectionModel(title: "同步与备份", items: [
-        .init(
-          icon: UIImage(systemName: "externaldrive.badge.icloud")!,
-          text: "iCloud同步",
-          accessoryType: .disclosureIndicator,
-          navigationLinkLabel: { [unowned self] in enableAppleCloud ? "启用" : "禁用" },
-          navigationAction: { [unowned self] in
-            self.mainViewModel.subViewSubject.send(.iCloud)
-          }
-        ),
+      SettingSectionModel(title: "备份", items: [
         .init(
           icon: UIImage(systemName: "externaldrive.badge.timemachine")!,
           text: "软件备份",

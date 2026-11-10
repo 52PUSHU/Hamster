@@ -202,7 +202,7 @@ class KeyboardToolbarView: NibLessView {
 
   @objc func openHamsterAppTouchUpAction() {
     iconButton.backgroundColor = style.toolbarButtonPressedBackgroundColor
-    actionHandler.handle(.release, on: .url(URL(string: "hamster://dev.fuxiao.app.hamster/main"), id: "openHamster"))
+    actionHandler.handle(.release, on: .url(URL(string: "\(HamsterConstants.appURL)/main"), id: "openHamster"))
   }
 
   @objc func touchCancel() {

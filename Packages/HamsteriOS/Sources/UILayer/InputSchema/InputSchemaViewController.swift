@@ -13,7 +13,6 @@ import UIKit
 class InputSchemaViewController: NibLessViewController {
   private let inputSchemaViewModel: InputSchemaViewModel
   private let documentPickerViewController: UIDocumentPickerViewController
-  private lazy var cloudInputSchemaViewController: CloudInputSchemaViewController = .init(inputSchemaViewModel: inputSchemaViewModel)
 
   private var subscriptions = Set<AnyCancellable>()
 
@@ -32,12 +31,8 @@ class InputSchemaViewController: NibLessViewController {
 
     inputSchemaViewModel.presentDocumentPickerPublisher
       .receive(on: DispatchQueue.main)
-      .sink {
-        switch $0 {
-        case .documentPicker: self.presentDocumentPicker()
-        case .downloadCloudInputSchema: self.presentCloudInputSchema()
-        default: return
-        }
+      .sink { [unowned self] in
+        presentDocumentPicker()
       }
       .store(in: &subscriptions)
 
@@ -53,11 +48,6 @@ class InputSchemaViewController: NibLessViewController {
   /// Present the document picker.
   func presentDocumentPicker() {
     present(documentPickerViewController, animated: true, completion: nil)
-  }
-
-  /// 云存储输入方案下载
-  func presentCloudInputSchema() {
-    navigationController?.pushViewController(cloudInputSchemaViewController, animated: true)
   }
 }
 

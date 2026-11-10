@@ -27,8 +27,6 @@ struct RimeSyncIntent: AppIntent {
   func perform() async throws -> some ReturnsValue & ProvidesDialog {
     do {
       let hamsterConfiguration = HamsterAppDependencyContainer.shared.configuration
-      // 先打开iCloud地址，防止Crash
-      _ = URL.iCloudDocumentURL
 
       // 增加同步路径检测（sync_dir），检测是否有权限写入。
       if let syncDir = FileManager.sandboxInstallationYaml.getSyncPath() {

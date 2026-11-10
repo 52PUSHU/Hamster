@@ -138,28 +138,20 @@ public extension FileManager {
   // Bool 处理是否成功
   // Error: 处理失败的Error
   func unzip(_ zipURL: URL, dst: URL) async throws {
-    var tempURL = zipURL
-
-    // 检测是否为iCloudURL, 需要特殊处理
-    if zipURL.path.contains("com~apple~CloudDocs") || zipURL.path.contains("iCloud~dev~fuxiao~app~hamsterapp") {
-      // iCloud中的URL须添加安全访问资源语句，否则会异常：Operation not permitted
-      // startAccessingSecurityScopedResource与stopAccessingSecurityScopedResource必须成对出现
-      if !zipURL.startAccessingSecurityScopedResource() {
-        throw "Zip文件读取权限受限"
+    let didAccess = zipURL.startAccessingSecurityScopedResource()
+    defer {
+      if didAccess {
+        zipURL.stopAccessingSecurityScopedResource()
       }
+    }
 
+    var tempURL = zipURL
+    if didAccess {
       let tempPath = temporaryDirectory.appendingPathComponent(zipURL.lastPathComponent)
-
-      // 临时文件如果存在需要先删除
       if fileExists(atPath: tempPath.path) {
         try removeItem(at: tempPath)
       }
-
       try copyItem(atPath: zipURL.path, toPath: tempPath.path)
-
-      // 停止读取url文件
-      zipURL.stopAccessingSecurityScopedResource()
-
       tempURL = tempPath
     }
 
@@ -250,7 +242,7 @@ public extension FileManager {
 public extension FileManager {
   // AppGroup共享目录
   // 注意：AppGroup已变为Keyboard复制方案使用的中转站
-  // App内部使用位置在 Document 和 iCloud 下
+  // App 内部使用位置在 Document 下
   static var shareURL: URL {
     FileManager.default.containerURL(
       forSecurityApplicationGroupIdentifier: HamsterConstants.appGroupName)!
@@ -465,63 +457,15 @@ public extension FileManager {
     try FileManager.incrementalCopy(src: sandboxUserDataDirectory, dst: appGroupUserDataDirectoryURL, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak)
   }
 
-  /// 拷贝 Sandbox 下 SharedSupport 目录至 AppGroup 下 SharedSupport 目录
-  static func copySandboxSharedSupportDirectoryToAppleCloud(_ filterRegex: [String] = [], filterMatchBreak: Bool = true) throws {
-    Logger.statistics.info("rime copySandboxSharedSupportDirectoryToAppleCloud: fileRegex \(filterRegex)")
-    try FileManager.incrementalCopy(src: sandboxSharedSupportDirectory, dst: URL.iCloudSharedSupportURL, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak)
-  }
-
-  /// 拷贝 Sandbox 下 UserData 目录至 AppGroup 下 UserData 目录
-  static func copySandboxUserDataDirectoryToAppleCloud(_ filterRegex: [String] = [], filterMatchBreak: Bool = true) throws {
-    Logger.statistics.info("rime copySandboxUserDataDirectoryToAppleCloud: filterRegex \(filterRegex)")
-    try FileManager.incrementalCopy(src: sandboxUserDataDirectory, dst: URL.iCloudUserDataURL, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak)
-  }
-
-  /// 拷贝 iCloud 下 SharedSupport 目录至 Sandbox 下 SharedSupport 目录
-  static func copyAppleCloudSharedSupportDirectoryToSandbox(_ filterRegex: [String] = []) throws {
-    Logger.statistics.info("rime copyAppleCloudSharedSupportDirectoryToSandboxSharedSupportDirectory")
-    try FileManager.incrementalCopy(src: URL.iCloudSharedSupportURL, dst: sandboxSharedSupportDirectory, filterRegex: filterRegex)
-  }
-
-  /// 拷贝 iCloud 下 UserData 目录至 Sandbox 下 UserData 目录
-  static func copyAppleCloudUserDataDirectoryToSandbox(_ filterRegex: [String] = []) throws {
-    Logger.statistics.info("rime copyAppleCloudUserDataDirectoryToSandboxUserDirectory:")
-    try FileManager.incrementalCopy(src: URL.iCloudUserDataURL, dst: sandboxUserDataDirectory, filterRegex: filterRegex)
-  }
-
-  /// 拷贝 iCloud 下 SharedSupport 目录至 AppGroup 下 SharedSupport 目录
-  static func copyAppleCloudSharedSupportDirectoryToAppGroup(_ filterRegex: [String] = []) throws {
-    Logger.statistics.info("rime copyAppleCloudSharedSupportDirectoryToAppGroupSharedSupportDirectory")
-    try FileManager.incrementalCopy(src: URL.iCloudSharedSupportURL, dst: appGroupSharedSupportDirectoryURL, filterRegex: filterRegex)
-  }
-
-  /// 拷贝 iCloud 下 UserData 目录至 AppGroup 下 UserData 目录
-  static func copyAppleCloudUserDataDirectoryToAppGroup(_ filterRegex: [String] = []) throws {
-    Logger.statistics.info("rime copyAppleCloudUserDataDirectoryToAppGroupUserDirectory:")
-    try FileManager.incrementalCopy(src: URL.iCloudUserDataURL, dst: appGroupUserDataDirectoryURL, filterRegex: filterRegex)
-  }
-
-  /// 拷贝 AppGroup 下 SharedSupport 目录至 iCloud 下 SharedSupport 目录
-  static func copyAppGroupSharedSupportDirectoryToAppleCloud(_ filterRegex: [String] = [], filterMatchBreak: Bool = true) throws {
-    Logger.statistics.info("rime copyAppGroupSharedSupportDirectoryToAppleCloudSharedSupportDirectory")
-    try FileManager.incrementalCopy(src: appGroupSharedSupportDirectoryURL, dst: URL.iCloudSharedSupportURL, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak)
-  }
-
-  /// 拷贝 AppGroup 下 UserData 目录至 iCloud 下 UserData 目录
-  static func copyAppGroupUserDirectoryToAppleCloud(_ filterRegex: [String] = [], filterMatchBreak: Bool = true) throws {
-    Logger.statistics.info("rime copyAppGroupUserDirectoryToAppleCloudUserDataDirectory:")
-    try FileManager.incrementalCopy(src: appGroupUserDataDirectoryURL, dst: URL.iCloudUserDataURL, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak)
-  }
-
   /// 拷贝 AppGroup 下 SharedSupport 目录至 sandbox 下 SharedSupport 目录
   static func copyAppGroupSharedSupportDirectoryToSandbox(_ filterRegex: [String] = [], filterMatchBreak: Bool = true, override: Bool = true) throws {
-    Logger.statistics.info("rime copyAppGroupSharedSupportDirectoryToAppleCloudSharedSupportDirectory")
+    Logger.statistics.info("rime copyAppGroupSharedSupportDirectoryToSandbox")
     try FileManager.incrementalCopy(src: appGroupSharedSupportDirectoryURL, dst: sandboxSharedSupportDirectory, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak, override: override)
   }
 
   /// 拷贝 AppGroup 下 UserData 目录至 sandbox 下 UserData 目录
   static func copyAppGroupUserDirectoryToSandbox(_ filterRegex: [String] = [], filterMatchBreak: Bool = true, override: Bool = true) throws {
-    Logger.statistics.info("rime copyAppGroupUserDirectoryToAppleCloudUserDataDirectory:")
+    Logger.statistics.info("rime copyAppGroupUserDirectoryToSandbox")
     try FileManager.incrementalCopy(src: appGroupUserDataDirectoryURL, dst: sandboxUserDataDirectory, filterRegex: filterRegex, filterMatchBreak: filterMatchBreak, override: override)
   }
 

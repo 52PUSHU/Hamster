@@ -11,10 +11,7 @@ import Foundation
 public enum SettingsSubView: String {
   /// 输入方案页面
   case inputSchema
-  
-  /// 输入方案上传页面
-  case uploadInputSchema
-  
+
   /// 文件管理页面
   case finder
   
@@ -26,10 +23,7 @@ public enum SettingsSubView: String {
   
   /// 反馈设置页面
   case feedback
-  
-  /// iCloud页面
-  case iCloud
-  
+
   /// 备份页面
   case backup
   

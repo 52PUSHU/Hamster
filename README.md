@@ -50,7 +50,6 @@ xed .
 * [ProgressHUD](https://github.com/relatedcode/ProgressHUD) (MIT License)
 * [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) (MIT License)
 * [Yams](https://github.com/jpsim/Yams) (MIT License)
-* [GCDWebServer](https://github.com/swisspol/GCDWebServer)
 
 # 致谢
 

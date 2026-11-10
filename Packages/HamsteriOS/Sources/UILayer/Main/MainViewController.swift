@@ -16,8 +16,6 @@ protocol SubViewControllerFactory {
   func makeKeyboardSettingsViewController() -> KeyboardSettingsViewController
   func makeKeyboardColorViewController() -> KeyboardColorViewController
   func makeKeyboardFeedbackViewController() -> KeyboardFeedbackViewController
-  func makeUploadInputSchemaViewController() -> UploadInputSchemaViewController
-  func makeAppleCloudViewController() -> AppleCloudViewController
   func makeBackupViewController() -> BackupViewController
   func makeAboutViewController() -> AboutViewController
   func makeRimeViewController() -> RimeViewController
@@ -43,17 +41,11 @@ open class MainViewController: UISplitViewController {
   private lazy var keyboardFeedbackViewController: KeyboardFeedbackViewController
     = subViewControllerFactory.makeKeyboardFeedbackViewController()
 
-  private lazy var uploadInputSchemaViewController: UploadInputSchemaViewController
-    = subViewControllerFactory.makeUploadInputSchemaViewController()
-
   private lazy var rimeViewController: RimeViewController
     = subViewControllerFactory.makeRimeViewController()
 
   private lazy var backupViewController: BackupViewController
     = subViewControllerFactory.makeBackupViewController()
-
-  private lazy var iCloudViewController: AppleCloudViewController
-    = subViewControllerFactory.makeAppleCloudViewController()
 
   private lazy var aboutViewController: AboutViewController
     = subViewControllerFactory.makeAboutViewController()
@@ -143,8 +135,6 @@ extension MainViewController {
       presentInputSchemaViewController()
     case .finder:
       presentFinderViewController()
-    case .uploadInputSchema:
-      presentUploadInputSchemaViewController()
     case .keyboardSettings:
       presentKeyboardSettingsViewController()
     case .colorSchema:
@@ -155,8 +145,6 @@ extension MainViewController {
       presentRimeViewController()
     case .backup:
       presentBackupViewController()
-    case .iCloud:
-      presentAppleCloudViewController()
     case .about:
       presentAboutViewController()
     case .main:
@@ -178,10 +166,6 @@ extension MainViewController {
     presentViewController(finderViewController)
   }
 
-  func presentUploadInputSchemaViewController() {
-    presentViewController(uploadInputSchemaViewController)
-  }
-
   func presentKeyboardSettingsViewController() {
     presentViewController(keyboardSettingsViewController)
   }
@@ -200,10 +184,6 @@ extension MainViewController {
 
   func presentBackupViewController() {
     presentViewController(backupViewController)
-  }
-
-  func presentAppleCloudViewController() {
-    presentViewController(iCloudViewController)
   }
 
   func presentAboutViewController() {

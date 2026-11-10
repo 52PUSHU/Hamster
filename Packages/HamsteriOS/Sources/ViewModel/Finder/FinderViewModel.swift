@@ -17,7 +17,6 @@ public enum FinderSegmentAction {
   case settings
   case appFiles
   case appGroupFiles
-  case iCloudFiles
 }
 
 public class FinderViewModel: ObservableObject {
@@ -42,10 +41,6 @@ public class FinderViewModel: ObservableObject {
   }
 
   private let conformSubject = PassthroughSubject<Conform, Never>()
-
-  public var enableAppleCloud: Bool {
-    configuration.general?.enableAppleCloud ?? false
-  }
 
   var regexOnCopyAppGroupDictFile: [String] {
     configuration.rime?.regexOnCopyAppGroupDictFile ?? ["^.*[.]userdb.*$", "^.*[.]txt$"]
@@ -102,8 +97,6 @@ public class FinderViewModel: ObservableObject {
       segmentActionSubject.send(.appFiles)
     case 2:
       segmentActionSubject.send(.appGroupFiles)
-    case 3:
-      segmentActionSubject.send(.iCloudFiles)
     default:
       return
     }

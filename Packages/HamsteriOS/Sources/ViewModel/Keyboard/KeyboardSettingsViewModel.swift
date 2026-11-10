@@ -1296,24 +1296,16 @@ extension KeyboardSettingsViewModel {
   public func importCustomizeKeyboardLayout(fileURL: URL) async {
     Logger.statistics.debug("importCustomizeKeyboardLayout fileName: \(fileURL.path)")
     await ProgressHUD.animate("导入中……", interaction: false)
-    // 检测是否为iCloudURL, 需要特殊处理
-    var needAccessingSecurity = false
-    if fileURL.path.contains("com~apple~CloudDocs") || fileURL.path.contains("iCloud~dev~fuxiao~app~hamsterapp") {
-      needAccessingSecurity = true
-      // iCloud中的URL须添加安全访问资源语句，否则会异常：Operation not permitted
-      // startAccessingSecurityScopedResource与stopAccessingSecurityScopedResource必须成对出现
-      if !fileURL.startAccessingSecurityScopedResource() {
-        await ProgressHUD.failed("导入文件读取受限，无法加载文件", interaction: false, delay: 1.5)
-        return
+    let didAccess = fileURL.startAccessingSecurityScopedResource()
+    defer {
+      if didAccess {
+        fileURL.stopAccessingSecurityScopedResource()
       }
     }
 
     // 加载自定义键盘配置文件
     do {
       let keyboards = try HamsterConfigurationRepositories.shared.loadCustomizerKeyboardLayoutYAML(fileURL)
-
-      // 停止读取url文件
-      if needAccessingSecurity { fileURL.stopAccessingSecurityScopedResource() }
 
       // 内置键盘
       // 注意：.filter 会过滤掉与导入键盘名称相同的键盘

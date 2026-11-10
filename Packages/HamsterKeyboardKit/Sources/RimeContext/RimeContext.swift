@@ -221,18 +221,6 @@ public extension RimeContext {
   /// RIME 部署
   /// 注意：仅可用于主 App 调用
   func deployment(configuration: inout HamsterConfiguration) throws {
-    // 如果开启 iCloud，则先将 iCloud 下文件增量复制到 Sandbox
-    if let enableAppleCloud = configuration.general?.enableAppleCloud, enableAppleCloud == true {
-      let regex = configuration.general?.regexOnCopyFile ?? []
-      do {
-        try FileManager.copyAppleCloudSharedSupportDirectoryToSandbox(regex)
-        try FileManager.copyAppleCloudUserDataDirectoryToSandbox(regex)
-      } catch {
-        Logger.statistics.error("RIME deploy error \(error.localizedDescription)")
-        throw error
-      }
-    }
-
     // 判断是否需要覆盖键盘词库文件，如果为否，则先copy键盘词库文件至应用目录
     if let overrideDictFiles = configuration.rime?.overrideDictFiles, overrideDictFiles == false {
       let regex = configuration.rime?.regexOnOverrideDictFiles ?? []

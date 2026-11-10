@@ -12,9 +12,7 @@ import Foundation
 extension HamsterConfiguration {
   /// 用于测试的模拟数据
   static let preview = HamsterConfiguration(
-    general: GeneralConfiguration(
-      enableAppleCloud: true,
-      regexOnCopyFile: ["^.text|.yaml$"]),
+    general: GeneralConfiguration(),
     toolbar: KeyboardToolbarConfiguration(
       enableToolbar: true,
       heightOfToolbar: 65,
@@ -72,12 +70,6 @@ extension HamsterConfiguration {
   static let sampleString = """
 # 通用配置
 general:
-  enableAppleCloud: false
-  regexOnCopyFile:
-  #    - ^.*[.]userdb.*$
-  #    - ^.*build.*$
-  #    - ^.*SharedSupport.*$
-  #    - ^.*[.]bin$
   # 内置文本编辑器参数: 是否自动换行
   textEditorLineWrappingEnabled: true
 

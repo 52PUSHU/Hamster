@@ -121,7 +121,7 @@ public class RimeViewModel {
       footer: """
       注意：
       1. RIME同步自定义参数，需要手工添加至Rime目录下的`installation.yaml`文件中(如果没有，需要则自行创建)；
-      2. 同步配置示例：(点击可复制)
+      2. `sync_dir` 必须是本机可写目录，不要填写 iCloud 或网络地址。配置示例：(点击可复制)
       ```
       \(Self.rimeSyncConfigSample)
       ```
@@ -252,9 +252,6 @@ public extension RimeViewModel {
 
       let hamsterConfiguration = HamsterAppDependencyContainer.shared.configuration
 
-      // 先打开iCloud地址，防止Crash
-      _ = URL.iCloudDocumentURL
-
       // 增加同步路径检测（sync_dir），检测是否有权限写入。
       if let syncDir = FileManager.sandboxInstallationYaml.getSyncPath() {
         if !FileManager.default.fileExists(atPath: syncDir) {
@@ -332,10 +329,9 @@ public extension RimeViewModel {
 
 public extension RimeViewModel {
   static let rimeSyncConfigSample = """
-  # id可以自定义，但不能其他终端定义的ID重复
+  # id可以自定义，但不能与其他终端定义的ID重复
   installation_id: "hamster"
-  # 仓的iOS中iCloud前缀路径固定为：/private/var/mobile/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents
-  # iOS中的路径与MacOS及Windows的iCloud路径是不同的
-  sync_dir: "/private/var/mobile/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents/sync"
+  # sync_dir 填写本机可写目录的绝对路径，例如应用文稿下自行创建的 sync 文件夹。
+  # 不要填写 iCloud 或网络地址。
   """
 }

@@ -18,12 +18,7 @@ class FinderRootView: NibLessView {
   private var subscriptions = Set<AnyCancellable>()
 
   lazy var segmentedControl: UISegmentedControl = {
-    let tags: [String]
-    if finderViewModel.enableAppleCloud {
-      tags = ["通用", "应用文件", "键盘文件", "iCloud文件"]
-    } else {
-      tags = ["通用", "应用文件", "键盘文件"]
-    }
+    let tags = ["通用", "应用文件", "键盘文件"]
     let segmentedControl = UISegmentedControl(items: tags)
     segmentedControl.selectedSegmentIndex = 0
     segmentedControl.addTarget(
@@ -51,14 +46,6 @@ class FinderRootView: NibLessView {
   lazy var appGroupDocumentFileBrowseView: FileBrowserView = {
     let fileBrowserViewModel = fileBrowserViewModelFactory.makeFileBrowserViewModel(rootURL: FileManager.shareURL)
     return FileBrowserView(finderViewModel: finderViewModel, fileBrowserViewModel: fileBrowserViewModel)
-  }()
-
-  lazy var iCloudDocumentFileBrowseView: FileBrowserView? = {
-    if let iCloudURL = URL.iCloudDocumentURL {
-      let fileBrowserViewModel = fileBrowserViewModelFactory.makeFileBrowserViewModel(rootURL: iCloudURL)
-      return FileBrowserView(finderViewModel: finderViewModel, fileBrowserViewModel: fileBrowserViewModel)
-    }
-    return nil
   }()
 
   // MARK: methods
@@ -116,8 +103,6 @@ extension FinderRootView {
       switchAppFileBrowser()
     case .appGroupFiles:
       switchAppGroupFileBrowser()
-    case .iCloudFiles:
-      switchAppleCloudBrowser()
     }
   }
 
@@ -131,23 +116,6 @@ extension FinderRootView {
 
   func switchAppGroupFileBrowser() {
     changeContentSubView(view: appGroupDocumentFileBrowseView)
-  }
-
-  func switchAppleCloudBrowser() {
-    if let view = iCloudDocumentFileBrowseView {
-      changeContentSubView(view: view)
-    } else {
-      let stackView = UIStackView(frame: .zero)
-      stackView.axis = .vertical
-      stackView.alignment = .center
-      stackView.distribution = .fill
-
-      let warringLabel = UILabel(frame: .zero)
-      warringLabel.text = "iCloud异常"
-      warringLabel.font = UIFont.preferredFont(forTextStyle: .body)
-      stackView.addSubview(warringLabel)
-      changeContentSubView(view: stackView)
-    }
   }
 
   private func changeContentSubView(view: UIView) {
